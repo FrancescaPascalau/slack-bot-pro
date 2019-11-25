@@ -1,13 +1,11 @@
 package com.francesca.pascalau.slackbotpro.controller;
 
 import com.francesca.pascalau.slackbotpro.data.CalendarEvent;
-import com.francesca.pascalau.slackbotpro.exceptions.MessageNotFoundException;
 import com.francesca.pascalau.slackbotpro.service.ConsumerService;
 import com.francesca.pascalau.slackbotpro.service.SlackBotService;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.util.concurrent.TimeoutException;
 
 @RestController
 @RequestMapping
@@ -22,11 +20,16 @@ public class SlackBotController {
     }
 
     @GetMapping("/readEvent")
-    public void readCalendarEventsFromQueue() throws IOException, TimeoutException, ClassNotFoundException, MessageNotFoundException {
-        sendMessage(consumer.listenQueue());
+    public String readCalendarEventsFromQueue() throws IOException, ClassNotFoundException {
+        if(true)
+            throw new RuntimeException();
+
+        final var calendarEvent = consumer.listenQueue();
+        sendMessage(calendarEvent);
+        return calendarEvent.toString();
     }
 
-    private void sendMessage(CalendarEvent calendarEvent)throws IOException {
+    private void sendMessage(CalendarEvent calendarEvent) {
         slackBotService.sendMessageToChannel(calendarEvent);
     }
 }

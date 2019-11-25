@@ -46,12 +46,22 @@ public class GoogleCalendarConfig {
         return new AuthorizationCodeInstalledApp(flow, receiver).authorize("user");
     }
 
-    public Calendar calendarService() throws GeneralSecurityException, IOException {
+    public Calendar calendarService() {
         // Build a new authorized API client service.
-        final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
-
-        return new Calendar.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT))
-                .setApplicationName(APPLICATION_NAME)
-                .build();
+        NetHttpTransport HTTP_TRANSPORT = new NetHttpTransport();
+        try{
+            HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
+        } catch (GeneralSecurityException | IOException e) {
+            e.printStackTrace();
+        }
+        Calendar calendar = null;
+        try {
+            calendar = new Calendar.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT))
+                    .setApplicationName(APPLICATION_NAME)
+                    .build();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return calendar;
     }
 }

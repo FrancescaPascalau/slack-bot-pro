@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 import java.util.UUID;
-import java.util.concurrent.TimeoutException;
 
 @RestController
 @RequestMapping
@@ -26,7 +25,7 @@ public class RabbitMqController {
     }
 
     @GetMapping("/sendMessage")
-    public void sendMessage() throws IOException, TimeoutException {
+    public void sendMessage() throws IOException {
         producer.sendMessageToQueue(CalendarEvent.builder()
                 .id(UUID.randomUUID().toString())
                 .date(DateTime.parseRfc3339("2019-04-11T08:30:00.0000004Z"))
@@ -37,7 +36,7 @@ public class RabbitMqController {
     }
 
     @GetMapping("/readMessage")
-    public void readMessage() throws IOException, TimeoutException, ClassNotFoundException {
+    public void readMessage() throws IOException, ClassNotFoundException {
         consumer.listenQueue();
     }
 }

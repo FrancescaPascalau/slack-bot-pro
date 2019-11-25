@@ -19,12 +19,17 @@ public class ProducerService {
     private final static String USERNAME = "guest";
     private final static String PASSWORD = "guest";
 
-    public void sendMessageToQueue(CalendarEvent event) throws IOException, TimeoutException {
+    public void sendMessageToQueue(CalendarEvent event) throws IOException {
         ConnectionFactory factory = new ConnectionFactory();
         factory.setHost(HOST);
         factory.setUsername(USERNAME);
         factory.setPassword(PASSWORD);
-        Connection connection = factory.newConnection();
+        Connection connection = null;
+        try {
+            connection = factory.newConnection();
+        } catch (TimeoutException e) {
+            e.printStackTrace();
+        }
         Channel channel = connection.createChannel();
 
         channel.queueDeclare(QUEUE_NAME, true, false, false, null);
@@ -33,11 +38,15 @@ public class ProducerService {
     }
 
     //Serializing CalendarEvent objects
-    private void publishMessage(Channel channel, CalendarEvent event) throws IOException {
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
-        objectOutputStream.writeObject(event);
+    private void publishMessage(Channel channel, CalendarEvent event) {
+        try {
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
+            objectOutputStream.writeObject(event);
 
-        channel.basicPublish("", QUEUE_NAME, null, outputStream.toByteArray());
+            channel.basicPublish("", QUEUE_NAME, null, outputStream.toByteArray());
+        } catch (IOException e){
+            e.getStackTrace();
+        }
     }
 }

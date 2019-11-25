@@ -8,8 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
-import java.security.GeneralSecurityException;
-import java.util.concurrent.TimeoutException;
 
 @RestController
 @RequestMapping
@@ -18,13 +16,13 @@ public class GoogleCalendarController {
     private GoogleCalendarService googleCalendarService;
     private ProducerService producer;
 
-    public GoogleCalendarController() throws GeneralSecurityException, IOException {
+    public GoogleCalendarController() {
         this.googleCalendarService = new GoogleCalendarService();
         this.producer = new ProducerService();
     }
 
     @GetMapping("/postEvent")
-    public void postCalendarEventsToQueue() throws IOException, TimeoutException {
+    public void postCalendarEventsToQueue() throws IOException {
         var events = googleCalendarService.futureEvents();
 
         if (events.isEmpty()) {

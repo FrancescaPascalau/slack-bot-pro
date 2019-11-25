@@ -9,26 +9,36 @@ import org.apache.http.impl.client.HttpClients;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 @Service
 public class SlackBotService {
 
     private static final String slackUrl = "https://pagantis.slack.com/services/hooks/slackbot?token=sKhFiB4uTAoYe250cbiKcukQ&channel=slack-bot-events";
 
-    public void sendMessageToChannel (CalendarEvent calendarEvent) throws IOException {
+    public void sendMessageToChannel (CalendarEvent calendarEvent) {
         String slackMessage = mapCalendarEventToSlackMessage(calendarEvent);
 
         configSlackMessage(slackMessage);
     }
 
-    private void configSlackMessage(String slackMessage) throws IOException {
+    private void configSlackMessage(String slackMessage) {
         HttpClient client = HttpClients.createDefault();
         HttpPost httpPost = new HttpPost(slackUrl);
 
-        StringEntity entity = new StringEntity(slackMessage);
+        StringEntity entity = null;
+        try {
+            entity = new StringEntity(slackMessage);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         httpPost.setEntity(entity);
 
-        client.execute(httpPost);
+        try {
+            client.execute(httpPost);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private String mapCalendarEventToSlackMessage(CalendarEvent calendarEvent) {

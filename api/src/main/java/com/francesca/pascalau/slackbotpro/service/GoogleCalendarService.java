@@ -9,7 +9,6 @@ import com.google.api.services.calendar.model.Events;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,23 +16,27 @@ import java.util.List;
 public class GoogleCalendarService {
     private Calendar calendar;
 
-    public GoogleCalendarService() throws GeneralSecurityException, IOException {
+    public GoogleCalendarService() {
         this.calendar = new GoogleCalendarConfig().calendarService();
     }
 
-    public List<CalendarEvent> futureEvents() throws IOException {
+    public List<CalendarEvent> futureEvents() {
         DateTime now = new DateTime(System.currentTimeMillis());
-        Events events = calendar.events().list("primary")
-                .setMaxResults(10)
-                .setTimeMin(now)
-                .setOrderBy("startTime")
-                .setSingleEvents(true)
-                .execute();
-
+        Events events = new Events();
+        try{
+            events = calendar.events().list("primary")
+                    .setMaxResults(10)
+                    .setTimeMin(now)
+                    .setOrderBy("startTime")
+                    .setSingleEvents(true)
+                    .execute();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return mapEvents(events.getItems());
     }
 
-    private List<CalendarEvent> mapEvents(List<Event> events) throws IOException {
+    private List<CalendarEvent> mapEvents(List<Event> events) {
         List<CalendarEvent> calendarEvents = new ArrayList<>();
         for(Event event : events){
             calendarEvents.add(mapCalendarEvent(event));
