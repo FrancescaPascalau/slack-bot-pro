@@ -47,11 +47,10 @@ public class GoogleCalendarConfig {
     }
 
     public Calendar calendarService() {
-        // Build a new authorized API client service.
         NetHttpTransport HTTP_TRANSPORT = new NetHttpTransport();
-        try{
+        try {
             HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
-        } catch (GeneralSecurityException | IOException e) {
+        } catch (IOException | GeneralSecurityException e) {
             e.printStackTrace();
         }
         Calendar calendar = null;

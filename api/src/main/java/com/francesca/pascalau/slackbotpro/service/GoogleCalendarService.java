@@ -22,17 +22,18 @@ public class GoogleCalendarService {
 
     public List<CalendarEvent> futureEvents() {
         DateTime now = new DateTime(System.currentTimeMillis());
-        Events events = new Events();
-        try{
+        Events events = null;
+        try {
             events = calendar.events().list("primary")
-                    .setMaxResults(10)
-                    .setTimeMin(now)
-                    .setOrderBy("startTime")
-                    .setSingleEvents(true)
-                    .execute();
+                        .setMaxResults(10)
+                        .setTimeMin(now)
+                        .setOrderBy("startTime")
+                        .setSingleEvents(true)
+                        .execute();
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         return mapEvents(events.getItems());
     }
 

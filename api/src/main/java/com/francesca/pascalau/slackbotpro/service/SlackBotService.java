@@ -1,6 +1,8 @@
 package com.francesca.pascalau.slackbotpro.service;
 
 import com.francesca.pascalau.slackbotpro.data.CalendarEvent;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
@@ -14,9 +16,12 @@ import java.io.UnsupportedEncodingException;
 @Service
 public class SlackBotService {
 
-    private static final String slackUrl = "https://pagantis.slack.com/services/hooks/slackbot?token=sKhFiB4uTAoYe250cbiKcukQ&channel=slack-bot-events";
+//    Old Webhook that is now disabled
+//    private static final String slackUrl = "https://pagantis.slack.com/services/hooks/slackbot?token=sKhFiB4uTAoYe250cbiKcukQ&channel=slack-bot-events";
 
-    public void sendMessageToChannel (CalendarEvent calendarEvent) {
+    private static final String slackUrl = "https://hooks.slack.com/services/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";
+
+    public void sendMessageToChannel (CalendarEvent calendarEvent) throws IOException {
         String slackMessage = mapCalendarEventToSlackMessage(calendarEvent);
 
         configSlackMessage(slackMessage);
@@ -26,14 +31,17 @@ public class SlackBotService {
         HttpClient client = HttpClients.createDefault();
         HttpPost httpPost = new HttpPost(slackUrl);
 
-        StringEntity entity = null;
+        JsonObject json = new JsonObject();
+        json.add("text", new JsonPrimitive(slackMessage));
+        StringEntity jsonBody = null;
         try {
-            entity = new StringEntity(slackMessage);
+            jsonBody = new StringEntity(json.toString());
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        httpPost.setEntity(entity);
 
+        httpPost.setEntity(jsonBody);
+        httpPost.setHeader("Content-Type", "text/plain");
         try {
             client.execute(httpPost);
         } catch (IOException e) {

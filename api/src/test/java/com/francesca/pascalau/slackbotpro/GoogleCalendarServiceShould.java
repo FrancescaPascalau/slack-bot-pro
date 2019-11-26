@@ -18,7 +18,7 @@ import java.util.UUID;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(MockitoJUnitRunner.class)
-public class GoogleCalendarEventsTests {
+public class GoogleCalendarServiceShould {
 
     private static final CalendarEvent EVENT = CalendarEvent.builder()
             .id(UUID.randomUUID().toString())
@@ -35,7 +35,7 @@ public class GoogleCalendarEventsTests {
     private GoogleCalendarService googleCalendarService;
 
     @Test
-    public void when_reading_CalendarEvents_then_map_them_to_CalendarEvents_entities() throws IOException {
+    public void read_CalendarEvents_then_map_them_to_CalendarEvents_entities() throws IOException {
         List<CalendarEvent> events = googleCalendarService.futureEvents();
         assertTrue(events.containsAll(googleCalendarService.futureEvents()));
     }

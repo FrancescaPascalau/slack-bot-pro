@@ -38,15 +38,11 @@ public class ProducerService {
     }
 
     //Serializing CalendarEvent objects
-    private void publishMessage(Channel channel, CalendarEvent event) {
-        try {
-            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-            ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
-            objectOutputStream.writeObject(event);
+    private void publishMessage(Channel channel, CalendarEvent event) throws IOException {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
+        objectOutputStream.writeObject(event);
 
-            channel.basicPublish("", QUEUE_NAME, null, outputStream.toByteArray());
-        } catch (IOException e){
-            e.getStackTrace();
-        }
+        channel.basicPublish("", QUEUE_NAME, null, outputStream.toByteArray());
     }
 }

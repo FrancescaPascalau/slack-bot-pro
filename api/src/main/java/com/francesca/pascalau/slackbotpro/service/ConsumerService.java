@@ -18,7 +18,7 @@ public class ConsumerService {
     private final static String QUEUE_NAME = "slack-bot-pro";
     private final static String HOST = "localhost";
 
-    public CalendarEvent listenQueue() throws IOException, ClassNotFoundException {
+    public CalendarEvent listenQueue() throws ClassNotFoundException, IOException {
 
         ConnectionFactory factory = new ConnectionFactory();
         factory.setHost(HOST);
@@ -28,8 +28,8 @@ public class ConsumerService {
         } catch (TimeoutException e) {
             e.printStackTrace();
         }
-        Channel channel = connection.createChannel();
 
+        Channel channel = connection.createChannel();
         channel.queueDeclare(QUEUE_NAME, true, false, false, null);
 
         return consumeMessage(channel);
@@ -49,6 +49,6 @@ public class ConsumerService {
         return (CalendarEvent) obj.readObject();
     }
 
-    public static class NoCalendarEventsException extends RuntimeException{
+    public static class NoCalendarEventsException extends RuntimeException {
     }
 }

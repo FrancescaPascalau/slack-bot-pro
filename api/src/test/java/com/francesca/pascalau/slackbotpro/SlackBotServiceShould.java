@@ -5,11 +5,16 @@ import com.francesca.pascalau.slackbotpro.service.SlackBotService;
 import com.google.api.client.util.DateTime;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.io.IOException;
 import java.util.UUID;
 
-public class SlackBotMessagesTests {
+@SpringBootTest
+public class SlackBotServiceShould {
+
+    @Autowired
+    private SlackBotService slackBotService;
 
     private CalendarEvent calendarEvent = CalendarEvent.builder()
             .id(UUID.randomUUID().toString())
@@ -19,11 +24,8 @@ public class SlackBotMessagesTests {
             .location("Barcelona, Da Vinci")
             .build();
 
-    @Autowired
-    private SlackBotService slackBotService;
-
     @Test
-    public void send_SlackMessage_with_CalendarEvent_information() throws IOException {
+    public void send_message_to_slack_channel_with_CalendarEvent_information() throws IOException {
         slackBotService.sendMessageToChannel(calendarEvent);
     }
 }

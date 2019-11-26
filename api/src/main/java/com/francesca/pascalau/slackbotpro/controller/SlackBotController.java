@@ -20,16 +20,22 @@ public class SlackBotController {
     }
 
     @GetMapping("/readEvent")
-    public String readCalendarEventsFromQueue() throws IOException, ClassNotFoundException {
-        if(true)
-            throw new RuntimeException();
-
-        final var calendarEvent = consumer.listenQueue();
+    public String readCalendarEventsFromQueue() {
+        CalendarEvent calendarEvent = null;
+        try {
+            calendarEvent = consumer.listenQueue();
+        } catch (ClassNotFoundException | IOException e) {
+            e.printStackTrace();
+        }
         sendMessage(calendarEvent);
         return calendarEvent.toString();
     }
 
     private void sendMessage(CalendarEvent calendarEvent) {
-        slackBotService.sendMessageToChannel(calendarEvent);
+        try {
+            slackBotService.sendMessageToChannel(calendarEvent);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

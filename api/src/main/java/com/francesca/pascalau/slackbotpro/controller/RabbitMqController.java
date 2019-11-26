@@ -25,18 +25,26 @@ public class RabbitMqController {
     }
 
     @GetMapping("/sendMessage")
-    public void sendMessage() throws IOException {
-        producer.sendMessageToQueue(CalendarEvent.builder()
-                .id(UUID.randomUUID().toString())
-                .date(DateTime.parseRfc3339("2019-04-11T08:30:00.0000004Z"))
-                .location("Da Vinci")
-                .creator("F. Pascalau")
-                .description("Very important meeting")
-                .build());
+    public void sendMessage() {
+        try {
+            producer.sendMessageToQueue(CalendarEvent.builder()
+                    .id(UUID.randomUUID().toString())
+                    .date(DateTime.parseRfc3339("2019-04-11T08:30:00.0000004Z"))
+                    .location("Da Vinci")
+                    .creator("F. Pascalau")
+                    .description("Very important meeting")
+                    .build());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @GetMapping("/readMessage")
-    public void readMessage() throws IOException, ClassNotFoundException {
-        consumer.listenQueue();
+    public void readMessage() {
+        try {
+            consumer.listenQueue();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 }
