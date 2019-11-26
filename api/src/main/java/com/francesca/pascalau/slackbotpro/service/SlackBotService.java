@@ -15,13 +15,9 @@ import java.io.UnsupportedEncodingException;
 
 @Service
 public class SlackBotService {
+    private static final String SLACK_URL = System.getenv("SLACK_URL");
 
-//    Old Webhook that is now disabled
-//    private static final String slackUrl = "https://pagantis.slack.com/services/hooks/slackbot?token=sKhFiB4uTAoYe250cbiKcukQ&channel=slack-bot-events";
-
-    private static final String slackUrl = "https://hooks.slack.com/services/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";
-
-    public void sendMessageToChannel (CalendarEvent calendarEvent) throws IOException {
+    public void sendMessageToChannel (CalendarEvent calendarEvent) {
         String slackMessage = mapCalendarEventToSlackMessage(calendarEvent);
 
         configSlackMessage(slackMessage);
@@ -29,7 +25,7 @@ public class SlackBotService {
 
     private void configSlackMessage(String slackMessage) {
         HttpClient client = HttpClients.createDefault();
-        HttpPost httpPost = new HttpPost(slackUrl);
+        HttpPost httpPost = new HttpPost(SLACK_URL);
 
         JsonObject json = new JsonObject();
         json.add("text", new JsonPrimitive(slackMessage));

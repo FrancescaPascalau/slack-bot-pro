@@ -32,10 +32,6 @@ public class SlackBotController {
     }
 
     private void sendMessage(CalendarEvent calendarEvent) {
-        try {
-            slackBotService.sendMessageToChannel(calendarEvent);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        slackBotService.sendMessageToChannel(calendarEvent);
     }
 }
