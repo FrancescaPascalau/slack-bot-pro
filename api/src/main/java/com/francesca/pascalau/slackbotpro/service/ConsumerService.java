@@ -19,7 +19,6 @@ public class ConsumerService {
     private final static String HOST = "localhost";
 
     public CalendarEvent listenQueue() throws ClassNotFoundException, IOException {
-
         ConnectionFactory factory = new ConnectionFactory();
         factory.setHost(HOST);
         Connection connection = null;
@@ -28,10 +27,8 @@ public class ConsumerService {
         } catch (TimeoutException e) {
             e.printStackTrace();
         }
-
         Channel channel = connection.createChannel();
         channel.queueDeclare(QUEUE_NAME, true, false, false, null);
-
         return consumeMessage(channel);
     }
 

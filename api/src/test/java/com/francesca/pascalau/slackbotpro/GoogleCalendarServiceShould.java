@@ -1,6 +1,5 @@
 package com.francesca.pascalau.slackbotpro;
 
-import com.francesca.pascalau.slackbotpro.config.GoogleCalendarConfig;
 import com.francesca.pascalau.slackbotpro.data.CalendarEvent;
 import com.francesca.pascalau.slackbotpro.service.GoogleCalendarService;
 import com.google.api.client.util.DateTime;
@@ -10,7 +9,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import java.io.IOException;
 import java.util.Calendar;
 import java.util.List;
 import java.util.UUID;
@@ -35,8 +33,9 @@ public class GoogleCalendarServiceShould {
     private GoogleCalendarService googleCalendarService;
 
     @Test
-    public void read_CalendarEvents_then_map_them_to_CalendarEvents_entities() throws IOException {
+    public void read_CalendarEvents_then_map_them_to_CalendarEvents_entities() {
         List<CalendarEvent> events = googleCalendarService.futureEvents();
+
         assertTrue(events.containsAll(googleCalendarService.futureEvents()));
     }
 }

@@ -1,6 +1,7 @@
 package com.francesca.pascalau.slackbotpro.controller;
 
 import com.francesca.pascalau.slackbotpro.data.CalendarEvent;
+import com.francesca.pascalau.slackbotpro.service.ConsumerService;
 import com.francesca.pascalau.slackbotpro.service.GoogleCalendarService;
 import com.francesca.pascalau.slackbotpro.service.ProducerService;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,7 +27,7 @@ public class GoogleCalendarController {
         var events = googleCalendarService.futureEvents();
 
         if (events.isEmpty()) {
-            System.out.println("No upcoming events found.");
+            throw new ConsumerService.NoCalendarEventsException();
         } else {
             System.out.println("Upcoming events");
             for (CalendarEvent event : events) {

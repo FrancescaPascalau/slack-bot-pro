@@ -33,7 +33,6 @@ public class GoogleCalendarService {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         return mapEvents(events.getItems());
     }
 

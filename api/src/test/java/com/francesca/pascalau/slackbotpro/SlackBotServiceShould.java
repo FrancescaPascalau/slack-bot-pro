@@ -7,7 +7,6 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.io.IOException;
 import java.util.UUID;
 
 @SpringBootTest
@@ -25,7 +24,7 @@ public class SlackBotServiceShould {
             .build();
 
     @Test
-    public void send_message_to_slack_channel_with_CalendarEvent_information() throws IOException {
+    public void send_message_to_slack_channel_with_CalendarEvent_information() {
         slackBotService.sendMessageToChannel(calendarEvent);
     }
 }
