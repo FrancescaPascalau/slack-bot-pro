@@ -1,6 +1,6 @@
 package com.francesca.pascalau.slackbotpro.service;
 
-import com.francesca.pascalau.slackbotpro.data.CalendarEvent;
+import com.francesca.pascalau.slackbotpro.entities.CalendarEvent;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import org.apache.commons.lang3.StringUtils;

@@ -1,6 +1,6 @@
 package com.francesca.pascalau.slackbotpro;
 
-import com.francesca.pascalau.slackbotpro.data.CalendarEvent;
+import com.francesca.pascalau.slackbotpro.entities.CalendarEvent;
 import com.francesca.pascalau.slackbotpro.service.SlackBotService;
 import com.google.api.client.util.DateTime;
 import org.junit.Test;

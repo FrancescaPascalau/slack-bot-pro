@@ -1,7 +1,7 @@
 package com.francesca.pascalau.slackbotpro.service;
 
 import com.francesca.pascalau.slackbotpro.config.GoogleCalendarConfig;
-import com.francesca.pascalau.slackbotpro.data.CalendarEvent;
+import com.francesca.pascalau.slackbotpro.entities.CalendarEvent;
 import com.google.api.client.util.DateTime;
 import com.google.api.services.calendar.Calendar;
 import com.google.api.services.calendar.model.Event;

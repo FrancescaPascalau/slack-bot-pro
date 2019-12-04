@@ -1,6 +1,6 @@
 package com.francesca.pascalau.slackbotpro.controller;
 
-import com.francesca.pascalau.slackbotpro.data.CalendarEvent;
+import com.francesca.pascalau.slackbotpro.entities.CalendarEvent;
 import com.francesca.pascalau.slackbotpro.service.ConsumerService;
 import com.francesca.pascalau.slackbotpro.service.GoogleCalendarService;
 import com.francesca.pascalau.slackbotpro.service.ProducerService;
@@ -13,7 +13,6 @@ import java.io.IOException;
 @RestController
 @RequestMapping
 public class GoogleCalendarController {
-
     private GoogleCalendarService googleCalendarService;
     private ProducerService producer;
 

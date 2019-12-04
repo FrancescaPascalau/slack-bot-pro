@@ -1,6 +1,6 @@
 package com.francesca.pascalau.slackbotpro.controller;
 
-import com.francesca.pascalau.slackbotpro.data.CalendarEvent;
+import com.francesca.pascalau.slackbotpro.entities.CalendarEvent;
 import com.francesca.pascalau.slackbotpro.service.ConsumerService;
 import com.francesca.pascalau.slackbotpro.service.ProducerService;
 import com.google.api.client.util.DateTime;
@@ -14,10 +14,8 @@ import java.util.UUID;
 @RestController
 @RequestMapping
 public class RabbitMqController {
-
     private ProducerService producer;
     private ConsumerService consumer;
-
 
     public RabbitMqController(ProducerService producer, ConsumerService consumer) {
         this.producer = producer;

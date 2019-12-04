@@ -1,6 +1,6 @@
 package com.francesca.pascalau.slackbotpro.controller;
 
-import com.francesca.pascalau.slackbotpro.data.CalendarEvent;
+import com.francesca.pascalau.slackbotpro.entities.CalendarEvent;
 import com.francesca.pascalau.slackbotpro.service.ConsumerService;
 import com.francesca.pascalau.slackbotpro.service.SlackBotService;
 import org.springframework.web.bind.annotation.*;
@@ -10,7 +10,6 @@ import java.io.IOException;
 @RestController
 @RequestMapping
 public class SlackBotController {
-
     private SlackBotService slackBotService;
     private ConsumerService consumer;
 

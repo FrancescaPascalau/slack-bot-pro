@@ -1,4 +1,4 @@
-package com.francesca.pascalau.slackbotpro.data;
+package com.francesca.pascalau.slackbotpro.entities;
 
 import com.google.api.client.util.DateTime;
 import lombok.Builder;
